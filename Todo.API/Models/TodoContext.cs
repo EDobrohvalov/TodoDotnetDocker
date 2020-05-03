@@ -12,6 +12,6 @@ namespace Todo.API.Models
             _db = client.GetDatabase(config.Database);
         }
 
-        public IMongoCollection<Models.Todo> Todos => _db.GetCollection<Models.Todo>("Todos");
+        public IMongoCollection<TodoItem> Todos => _db.GetCollection<TodoItem>("Todos");
     }
 }

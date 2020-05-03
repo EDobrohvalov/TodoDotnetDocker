@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Todo.API.Models;
 
 namespace Todo.API.Controllers
 {
@@ -17,14 +18,14 @@ namespace Todo.API.Controllers
 
         // GET api/todos
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Models.Todo>>> Get()
+        public async Task<ActionResult<IEnumerable<TodoItem>>> Get()
         {
             return new ObjectResult(await _repository.GetAllTodos());
         }
 
         // GET api/todos/1
         [HttpGet("{id}")]
-        public async Task<ActionResult<Models.Todo>> Get(long id)
+        public async Task<ActionResult<TodoItem>> Get(long id)
         {
             var todo = await _repository.GetTodo(id);
             if (todo == null)
@@ -35,24 +36,24 @@ namespace Todo.API.Controllers
 
         // POST api/todos
         [HttpPost]
-        public async Task<ActionResult<Models.Todo>> Post([FromBody] Models.Todo todo)
+        public async Task<ActionResult<TodoItem>> Post([FromBody] TodoItem todoItem)
         {
-            todo.Id = await _repository.GetNextId();
-            await _repository.Create(todo);
-            return new OkObjectResult(todo);
+            todoItem.Id = await _repository.GetNextId();
+            await _repository.Create(todoItem);
+            return new OkObjectResult(todoItem);
         }
 
         // PUT api/todos/1
         [HttpPut("{id}")]
-        public async Task<ActionResult<Models.Todo>> Put(long id, [FromBody] Models.Todo todo)
+        public async Task<ActionResult<TodoItem>> Put(long id, [FromBody] TodoItem todoItem)
         {
             var todoFromDb = await _repository.GetTodo(id);
             if (todoFromDb == null)
                 return new NotFoundResult();
-            todo.Id = todoFromDb.Id;
-            todo.InternalId = todoFromDb.InternalId;
-            await _repository.Update(todo);
-            return new OkObjectResult(todo);
+            todoItem.Id = todoFromDb.Id;
+            todoItem.InternalId = todoFromDb.InternalId;
+            await _repository.Update(todoItem);
+            return new OkObjectResult(todoItem);
         }
 
         // DELETE api/todos/1

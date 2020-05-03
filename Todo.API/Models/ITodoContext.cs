@@ -4,6 +4,6 @@ namespace Todo.API.Models
 {
     public interface ITodoContext
     {
-        IMongoCollection<Models.Todo> Todos { get; }
+        IMongoCollection<TodoItem> Todos { get; }
     }
 }

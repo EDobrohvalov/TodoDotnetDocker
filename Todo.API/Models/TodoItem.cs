@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Todo.API.Models
 {
-    public class Todo
+    public class TodoItem
     {
         [BsonId] public ObjectId InternalId { get; set; }
         public long Id { get; set; }
